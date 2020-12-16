@@ -1,0 +1,4 @@
+dist/
+build/
+archivy_git.egg-info/
+__pycache__/
