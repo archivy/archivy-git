@@ -1,8 +1,6 @@
-`archivy-pocket` allows users to sync their pocket bookmarks to their [Archivy](https://github.com/archivy/archivy) knowledge base.
+`archivy-git` allows users to use version control with their [Archivy](https://archivy.github.io) instance.
 
 It is an official extension developed by [archivy](https://github.com/archivy/)
-
-![demo](https://github.com/archivy/archivy_pocket/blob/master/demo.gif)
 
 ## Install
 
@@ -12,20 +10,43 @@ Run `pip install archivy_pocket`.
 
 ## Usage
 
-To do this, you need to create a Pocket API app [here](https://getpocket.com/developer/apps/). It only needs the `Retrieve` permissions and is of type `Web`.
+```bash
+$ archivy git --help
+Usage: archivy git [OPTIONS] COMMAND [ARGS]...
 
-Then, run:
+Options:
+  --help  Show this message and exit.
 
-```python
-archivy pocket auth <your pocket key>
+Commands:
+  pull   Pulls changes from remote to local repository.
+  push   Pushes local changes to the remote.
+  setup  Creates and sets up git repository.
 ```
 
-This will prompt a webpage asking you to allow the Pocket App to retrieve your bookmarks. Click accept.
+Use the `setup` command to create and configure your git repository.
 
-Run `archivy pocket complete` to finish up the auth process.
+Then you can periodically `pull/push` through the command line or the web interface by clicking `Plugins` on your archivy homepage.
 
+However, it can also be useful to automatically push changes when you make an edit or create a new note / bookmark. To do this, you'll need to configure a [Hook](https://archivy.github.io/reference/hooks).
 
-Now that you're set up, all you need to do to is run `archivy pocket sync` to fetch your latest bookmarks.
+These are events that Archivy exposes and that you can configure.
 
-You can also use the plugin through the web interface at `/plugins`.
+To do so, run `archivy hooks` to edit the file and create it if it doesn't exist.
 
+We can use the `sync_dataobj` `archivy-git` method to sync changes when they are made.
+
+Example:
+
+```python
+from archivy.config import BaseHooks
+class Hooks(BaseHooks):
+	
+	def on_edit(dataobj):
+		from archivy_git import sync_dataobj	
+		sync_dataobj(dataobj) # syncs / pushes changes
+
+	def on_dataobj_create(dataobj):
+		# the same for creation
+		from archivy_git import sync_dataobj	
+		sync_dataobj(dataobj)
+```
