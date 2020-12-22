@@ -23,7 +23,9 @@ Commands:
   setup  Creates and sets up git repository.
 ```
 
-Use the `setup` command to create and configure your git repository.
+Use the `setup` command to create and configure a new, empty git repository.
+
+You can also just clone an existing repository, in which case you don't need to run setup
 
 Then you can periodically `pull/push` through the command line or the web interface by clicking `Plugins` on your archivy homepage.
 

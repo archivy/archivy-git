@@ -6,6 +6,13 @@ import git as gitpython
 from archivy import app
 from archivy.models import DataObj
 
+# https://gitpython.readthedocs.io/en/stable/reference.html#git.remote.PushInfo
+ERROR_CODES = [1024, 8, 32, 16, 4]
+
+def check_errored(flags):
+    # gitpython returns flags to be checked by doing an AND with specified codes
+    return any([flags & error_code for error_code in ERROR_CODES])
+
 
 def get_repo():
     with app.app_context():
@@ -42,7 +49,7 @@ def setup():
 
 
 @git.command()
-@click.argument("paths", type=click.Path(exists=True), nargs=-1, required=True)
+@click.argument("paths", type=click.Path(exists=True), nargs=-1)
 def push(paths):
     """Pushes local changes to the remote."""
     repo = get_repo()
@@ -50,16 +57,21 @@ def push(paths):
         prefixed_paths = [os.path.join(app.config["USER_DIR"], "data", path) for path in paths]
     repo.index.add(prefixed_paths)
     repo.index.commit("Sync local changes to remote git repo.")
-    repo.remotes.origin.push()
-    click.echo("Successfully synced local changes to remote!")
+    push_event = repo.remotes.origin.push()[0]
+    if check_errored(push_event.flags):
+        click.echo(push_event.summary)
+    else:
+        click.echo("Successfully pushed changes to remote!")
 
 
 @git.command()
 def pull():
     """Pulls changes from remote to local repository."""
     repo = get_repo()
-    repo.remotes.origin.pull()
-    click.echo("Sucessfully pulled changes from remote!")
+    pull_event = repo.remotes.origin.pull()
+    if check_errored(pull_event.flags):
+        click.echo("Error during pull", pull_event.note)
+    else: click.echo("Sucessfully pulled changes from remote!")
 
 
 def sync_dataobj(dataobj: DataObj):
