@@ -6,7 +6,7 @@ It is an official extension developed by [archivy](https://github.com/archivy/)
 
 You need to have `archivy` already installed.
 
-Run `pip install archivy_pocket`.
+Run `pip install archivy_git`.
 
 ## Usage
 
