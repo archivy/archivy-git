@@ -27,7 +27,7 @@ Use the `setup` command to create and configure a new, empty git repository.
 
 You can also just clone an existing repository, in which case you don't need to run setup
 
-Then you can periodically `pull/push` through the command line or the web interface by clicking `Plugins` on your archivy homepage.
+Then you can periodically `pull/push` through the command line. **The plugin is not yet compatible with the web interface.** 
 
 However, it can also be useful to automatically push changes when you make an edit or create a new note / bookmark. To do this, you'll need to configure a [Hook](https://archivy.github.io/reference/hooks).
 
