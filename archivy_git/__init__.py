@@ -32,7 +32,6 @@ def setup():
         repo = gitpython.Repo.init(app.config["USER_DIR"])
         branch = click.prompt("Main branch", type=str, default="main")
         repo.index.add("data/")
-        repo.index.add("hooks.py")
         repo.index.commit("Initial commit")
         repo.active_branch.rename(branch)
 
