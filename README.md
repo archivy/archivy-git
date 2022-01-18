@@ -23,7 +23,7 @@ Commands:
   setup  Creates and sets up git repository.
 ```
 
-Use the `setup` command to create and configure a new, empty git repository. If you connect your repo to a private GitHub repository, keep in mind you can no longer login with your username / password and you need to create a [personal access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token) or setup SSH.
+Use the `setup` command to create and configure a new, empty git repository. If you connect your repo to a private GitHub repository, keep in mind you can no longer login with your username / password and you need to create a [personal access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token).
 
 You can also just clone an existing repository, in which case you don't need to run setup
 
