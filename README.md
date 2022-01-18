@@ -42,13 +42,13 @@ Example:
 ```python
 from archivy.config import BaseHooks
 class Hooks(BaseHooks):
-	
+
 	def on_edit(self, dataobj):
-		from archivy_git import sync_dataobj	
+		from archivy_git import sync_dataobj
 		sync_dataobj(dataobj) # syncs / pushes changes
 
 	def on_dataobj_create(self, dataobj):
 		# the same for creation
-		from archivy_git import sync_dataobj	
+		from archivy_git import sync_dataobj
 		sync_dataobj(dataobj)
 ```
